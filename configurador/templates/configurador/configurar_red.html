@@ -1,0 +1,16 @@
+<h2>Configurar reglas de red para el laboratorio: {{ laboratorio.nombre }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Agregar regla</button>
+</form>
+
+<h3>Reglas de Red Actuales</h3>
+<ul>
+    {% for regla in reglas_existentes %}
+        <li>{{ regla.name }} - VLAN {{ regla.vlan_src }} a VLAN {{ regla.vlan_dst }} (Protocolo: {{ regla.protocolo }}) - Acción: {{ regla.action }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'lista_laboratorios' %}">Guardar Configuración</a>

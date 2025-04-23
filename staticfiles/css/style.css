@@ -1,0 +1,82 @@
+/* Estilo General */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #FFFFFF; /* Fondo blanco */
+    color: #0F172A; /* Azul oscuro para el texto */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #1E3A8A; /* Azul profundo */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 24px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+}
+
+nav a:hover {
+    background-color: #2563EB; /* Azul brillante para hover */
+}
+
+/* Formulario */
+form {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #F3F4F6; /* Gris claro */
+    border-radius: 8px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 1px solid #F3F4F6; /* Gris claro */
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input[type="submit"] {
+    background-color: #2563EB; /* Azul brillante */
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #1E3A8A; /* Azul oscuro para hover */
+}
+
+/* Sección de resultados */
+.results-section {
+    background-color: #E0F2FE; /* Azul suave */
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+/* Pie de página */
+footer {
+    background-color: #0F172A; /* Azul oscuro */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}

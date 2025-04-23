@@ -1,0 +1,36 @@
+<h2>Despliegue de Laboratorio</h2>
+<ul id="pasos-lista" class="list-group">
+    <li class="list-group-item" id="Conexión SSH">Conexión SSH... <span class="estado">⏳</span></li>
+    <li class="list-group-item" id="Archivo de configuración">Verificar archivo... <span class="estado">⏳</span></li>
+    <li class="list-group-item" id="Ludus instalado">Ludus instalado... <span class="estado">⏳</span></li>
+    <li class="list-group-item" id="Plantillas">Comprobar plantillas... <span class="estado">⏳</span></li>
+    <li class="list-group-item" id="Configurar Ludus">Configurar Ludus... <span class="estado">⏳</span></li>
+    <li class="list-group-item" id="Despliegue">Iniciar despliegue... <span class="estado">⏳</span></li>
+</ul>
+
+<script>
+function actualizarPaso(nombre, estado, mensaje) {
+    const li = document.getElementById(nombre);
+    const span = li.querySelector('.estado');
+    if (estado === 'ok') {
+        span.textContent = '✅';
+        li.classList.add('list-group-item-success');
+    } else if (estado === 'error') {
+        span.textContent = '❌';
+        li.classList.add('list-group-item-danger');
+    } else {
+        span.textContent = '⏳';
+    }
+    if (mensaje) {
+        li.innerHTML += `<br><small>${mensaje}</small>`;
+    }
+}
+
+fetch("{% url 'api_desplegar_laboratorio' lab_id %}")
+    .then(res => res.json())
+    .then(pasos => {
+        pasos.forEach(paso => {
+            actualizarPaso(paso.nombre, paso.estado, paso.mensaje);
+        });
+    });
+</script>

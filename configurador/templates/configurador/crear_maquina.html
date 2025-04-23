@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Máquinas Virtuales</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Agregar Máquinas Virtuales al Laboratorio: {{ laboratorio.nombre }}</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Agregar Máquina Virtual</button>
+        </form>
+
+        <h3 class="mt-4">Máquinas Virtuales Asociadas</h3>
+        <ul class="list-group">
+            {% for maquina in laboratorio.maquinas_virtuales.all %}
+                <li class="list-group-item">
+                    {{ maquina.nombre_vm }}
+                    <form action="{% url 'eliminar_maquina_virtual' maquina.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'configurar_red' laboratorio.id %}" class="btn btn-success mt-4">Guardar Máquinas</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

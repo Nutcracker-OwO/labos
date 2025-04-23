@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar SSH</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Configurar Conexión SSH</h1>
+
+        <!-- Mensajes de éxito o error -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'guardar_config_ssh' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="host" class="form-label">IP o Nombre del Host</label>
+                <input type="text" class="form-control" id="host" name="host" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input type="text" class="form-control" id="usuario" name="usuario" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar Configuración</button>
+            <a href="{% url 'lista_laboratorios' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+ludus:
+- vm_name: '{{ range_id }}-DC01'
+  hostname: '{{ range_id }}-DC01'
+  template: win2022-server-x64
+  vlan: 10
+  ip_last_octet: 2
+  ram_gb: 4
+  cpus: 2
+  windows:
+    sysprep: false
+  domain: {}
+- vm_name: '{{ range_id }}-DC02'
+  hostname: '{{ range_id }}-DC02'
+  template: win2022-server-x64
+  vlan: 20
+  ip_last_octet: 4
+  ram_gb: 4
+  cpus: 2
+  windows:
+    sysprep: false
+  domain: {}

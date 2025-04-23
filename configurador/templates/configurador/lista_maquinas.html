@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Máquinas</title>
+
+    <!-- Cargar la etiqueta estática -->
+    {% load static %}
+
+    <!-- Vincular el archivo CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Máquinas Virtuales</h1>
+    </header>
+
+    <a href="{% url 'agregar_maquina' %}">Agregar Máquina</a> |
+    <a href="{% url 'descargar_config' %}">Descargar Configuración</a> |
+    <ul>
+        {% for maquina in maquinas %}
+            <li>{{ maquina.nombre_vm }} - {{ maquina.hostname }} - {{ maquina.plantilla }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

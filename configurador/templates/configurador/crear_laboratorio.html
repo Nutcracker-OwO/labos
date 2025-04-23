@@ -1,0 +1,85 @@
+<h2>Crear Nuevo Laboratorio</h2>
+
+<!-- Formulario del laboratorio -->
+<form method="POST" id="formLaboratorio">
+    {% csrf_token %}
+    {{ laboratorio_form.as_p }}
+
+    <h3>Máquinas Virtuales</h3>
+
+    <!-- Contenedor para las máquinas virtuales -->
+    <div id="vmContainer">
+        {% for form in formset %}
+            <div class="vmForm">
+                {{ form.as_p }}
+                <button type="button" class="eliminarVM" onclick="eliminarVM(this)">Eliminar</button>
+                <hr>
+            </div>
+        {% endfor %}
+    </div>
+
+    <button type="button" onclick="agregarVM()">Añadir Máquina Virtual</button>
+    <button type="submit">Guardar Laboratorio</button>
+</form>
+
+<script>
+    function agregarVM() {
+        const vmForm = document.createElement("div");
+        vmForm.innerHTML = `
+            <label for="id_nombre_vm">Nombre:</label>
+            <input type="text" name="nombre_vm" required>
+
+            <label for="id_ram_gb">RAM (GB):</label>
+            <input type="number" name="ram_gb" required>
+
+            <label for="id_cpus">CPU:</label>
+            <input type="number" name="cpus" required>
+
+            <label for="id_plantilla">Plantilla:</label>
+            <input type="text" name="plantilla" required>
+
+            <button type="button" class="eliminarVM" onclick="eliminarVM(this)">Eliminar</button>
+            <hr>
+        `;
+        document.getElementById("vmContainer").appendChild(vmForm);
+    }
+
+    function eliminarVM(button) {
+        const vmForm = button.parentElement;
+        vmForm.remove();
+    }
+
+    // Función para eliminar una máquina virtual
+    function eliminarMaquinaVirtual(id) {
+        fetch(`/eliminar_maquina_virtual/${id}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert("Máquina Virtual eliminada con éxito");
+            } else {
+                alert("Error al eliminar la máquina virtual");
+            }
+        });
+    }
+
+    // Función para obtener el valor del token CSRF
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>

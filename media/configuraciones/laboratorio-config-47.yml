@@ -1,0 +1,16 @@
+ludus:
+- vm_name: '{{ range_id }}-DC01'
+  hostname: '{{ range_id }}-DC01'
+  template: 'kali-x64-desktop-template  '
+  vlan: 120
+  ip_last_octet: 3
+  ram_gb: 4
+  cpus: 2
+  windows: {}
+  domain: {}
+network:
+  inter_vlan_default: REJECT
+  external_default: ACCEPT
+  wireguard_vlan_default: ACCEPT
+  always_blocked_networks: []
+  rules: []

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Laboratorios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Lista de Laboratorios</h1>
+
+        <!-- Botón para configurar SSH -->
+        <a href="{% url 'configurar_ssh' %}" class="btn btn-warning mb-3">Configurar SSH</a>
+
+        <!-- Botón para agregar un nuevo laboratorio -->
+        <a href="{% url 'agregar_laboratorio' %}" class="btn btn-success mb-3">Crear Nuevo Laboratorio</a>
+
+        <h2>Laboratorios Creados</h2>
+        <ul class="list-group">
+            {% for laboratorio in laboratorios_creados %}
+                <li class="list-group-item">
+                    <strong>{{ laboratorio.nombre }}</strong><br>
+                    
+                    <!-- Mostrar la descripción del laboratorio -->
+                    {% if laboratorio.descripcion %}
+                        <small>{{ laboratorio.descripcion }}</small>
+                    {% else %}
+                        <small>No hay descripción disponible</small>
+                    {% endif %}
+
+                    <br>
+
+                    <!-- Botones de acción -->
+                    <a href="{% url 'descargar_config' laboratorio.id %}" class="btn btn-info btn-sm mt-2">Descargar Configuración</a>
+                    <a href="{% url 'subir_configuracion' laboratorio.id %}" class="btn btn-success btn-sm mt-2">Subir Configuración</a>
+                    <a href="{% url 'despliegue_laboratorio' laboratorio.id %}" class="btn btn-primary btn-sm mt-2">Desplegar</a>
+                    
+                    <form action="{% url 'eliminar_laboratorio' laboratorio.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm mt-2">Eliminar</button>
+                    </form>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-center">No hay laboratorios creados aún.</li>
+            {% endfor %}
+        </ul>
+
+        <!-- LABORATORIOS PREDETERMINADOS -->
+        <h2>Laboratorios Predeterminados</h2>
+        <ul class="list-group">
+            {% for lab in laboratorios_predeterminados %}
+                <li class="list-group-item">
+                    <strong>{{ lab.nombre }}</strong><br>
+                    <small>{{ lab.descripcion }}</small><br>
+
+                    {% if lab.config_file_url %}
+                        <a href="/{{ lab.config_file_url }}" class="btn btn-info btn-sm mt-2" download>Descargar Configuración</a>
+                    {% endif %}
+                    <a href="{{ lab.upload_url }}" class="btn btn-success btn-sm mt-2">Subir Configuración</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item text-center">No hay laboratorios predeterminados disponibles.</li>
+            {% endfor %}
+        </ul>
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
